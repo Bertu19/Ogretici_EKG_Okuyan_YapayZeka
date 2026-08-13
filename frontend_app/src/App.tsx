@@ -186,7 +186,7 @@ export default function App() {
             </div>
             <div>
               <h1 className="text-base font-semibold leading-tight text-slate-100 tracking-tight">
-                Kardiyoloji EKG Analiz Sistemi
+                Kardiyoloji EKG Analiz Sistemi by BertuDeler
               </h1>
               <p className="text-xs text-[#6b7280] mt-0.5" style={{ fontFamily: 'DM Mono, monospace' }}>
                 Klinik Karar Destek · Tıp Eğitimi Modülü

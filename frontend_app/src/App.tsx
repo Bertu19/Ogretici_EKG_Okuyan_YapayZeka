@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, type DragEvent, type ChangeEvent } from 'react'
+﻿import { useState, useRef, useCallback, type DragEvent, type ChangeEvent } from 'react'
 
 type Gender = 'male' | 'female' | 'other' | ''
 
@@ -186,10 +186,10 @@ export default function App() {
             </div>
             <div>
               <h1 className="text-base font-semibold leading-tight text-slate-100 tracking-tight">
-                Cardiology EKG Analysis System
+                Kardiyoloji EKG Analiz Sistemi
               </h1>
               <p className="text-xs text-[#6b7280] mt-0.5" style={{ fontFamily: 'DM Mono, monospace' }}>
-                Clinical Decision Support · Medical Education Module
+                Klinik Karar Destek · Tıp Eğitimi Modülü
               </p>
             </div>
           </div>
@@ -199,13 +199,13 @@ export default function App() {
               className="text-xs px-2.5 py-1 rounded-full font-medium"
               style={{ backgroundColor: 'rgba(52,211,153,0.1)', color: '#34d399', border: '1px solid rgba(52,211,153,0.25)', fontFamily: 'DM Mono, monospace' }}
             >
-              ● EDUCATIONAL
+              ● EĞİTİM AMAÇLI
             </span>
             <span
               className="text-xs px-2.5 py-1 rounded-full font-medium hidden sm:inline-flex"
               style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.25)', fontFamily: 'DM Mono, monospace' }}
             >
-              NOT FOR CLINICAL USE
+              KLİNİK KULLANIMA UYGUN DEĞİLDİR
             </span>
           </div>
         </div>
@@ -217,11 +217,11 @@ export default function App() {
             <div className="px-6 pt-5 pb-3" style={{ borderBottom: '1px solid rgba(55,65,81,0.6)' }}>
               <div className="flex items-start justify-between mb-1">
                 <div>
-                  <h2 className="text-sm font-semibold text-slate-200 tracking-tight">EKG Input & Patient Metadata</h2>
-                  <p className="text-xs text-[#6b7280] mt-0.5">Upload a 12-lead EKG tracing or PDF report for analysis</p>
+                  <h2 className="text-sm font-semibold text-slate-200 tracking-tight">EKG Girişi ve Hasta Bilgileri</h2>
+                  <p className="text-xs text-[#6b7280] mt-0.5">Analiz için 12 derivasyonlu EKG görseli veya PDF raporu yükleyin</p>
                 </div>
                 <span className="text-xs font-medium px-2 py-0.5 rounded" style={{ backgroundColor: '#0b0f19', color: '#6b7280', fontFamily: 'DM Mono, monospace' }}>
-                  STEP 01
+                  ADIM 01
                 </span>
               </div>
               <EkgTrace />
@@ -263,7 +263,7 @@ export default function App() {
                         <p className="text-sm font-medium text-slate-200">{file.name}</p>
                         <p className="text-xs text-[#6b7280] mt-0.5">{(file.size / 1024).toFixed(1)} KB</p>
                       </div>
-                      <p className="text-xs text-[#4b5563]">Click to replace</p>
+                      <p className="text-xs text-[#4b5563]">Değiştirmek için tıklayın</p>
                     </>
                   ) : (
                     <>
@@ -275,10 +275,10 @@ export default function App() {
                         </svg>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-300">Drop EKG image or PDF here</p>
-                        <p className="text-xs text-[#6b7280] mt-1">PNG, JPG, JPEG, PDF · Max 20 MB</p>
+                        <p className="text-sm font-medium text-slate-300">EKG görselini veya PDF'i buraya sürükleyin</p>
+                        <p className="text-xs text-[#6b7280] mt-1">PNG, JPG, JPEG, PDF · Maks 20 MB</p>
                       </div>
-                      <p className="text-xs text-[#4b5563]">or click to browse files</p>
+                      <p className="text-xs text-[#4b5563]">veya dosya seçmek için tıklayın</p>
                     </>
                   )}
                 </div>
@@ -287,23 +287,23 @@ export default function App() {
               <div className="lg:col-span-2 flex flex-col gap-4">
                 <div className="rounded-xl overflow-hidden flex items-center justify-center" style={{ backgroundColor: '#0b0f19', border: '1px solid rgba(55,65,81,0.7)', height: '120px' }}>
                   {preview ? (
-                    <img src={preview} alt="EKG preview" className="max-h-full max-w-full object-contain" />
+                    <img src={preview} alt="EKG Önizleme" className="max-h-full max-w-full object-contain" />
                   ) : (
                     <div className="text-center">
-                      <p className="text-xs text-[#4b5563]" style={{ fontFamily: 'DM Mono, monospace' }}>LIVE PREVIEW</p>
-                      <p className="text-xs text-[#374151] mt-1">No image loaded</p>
+                      <p className="text-xs text-[#4b5563]" style={{ fontFamily: 'DM Mono, monospace' }}>CANLI ÖNİZLEME</p>
+                      <p className="text-xs text-[#374151] mt-1">Dosya yüklenmedi</p>
                     </div>
                   )}
                 </div>
 
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-medium text-[#9ca3af] mb-1.5" style={{ fontFamily: 'DM Mono, monospace' }}>PATIENT AGE</label>
+                    <label className="block text-xs font-medium text-[#9ca3af] mb-1.5" style={{ fontFamily: 'DM Mono, monospace' }}>HASTA YAŞI</label>
                     <input
                       type="number"
                       min={0}
                       max={120}
-                      placeholder="e.g. 58"
+                      placeholder="örn. 58"
                       value={meta.age}
                       onChange={(e) => setMeta((m) => ({ ...m, age: e.target.value }))}
                       className="w-full rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-[#4b5563] outline-none"
@@ -312,17 +312,17 @@ export default function App() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-[#9ca3af] mb-1.5" style={{ fontFamily: 'DM Mono, monospace' }}>BIOLOGICAL SEX</label>
+                    <label className="block text-xs font-medium text-[#9ca3af] mb-1.5" style={{ fontFamily: 'DM Mono, monospace' }}>BİYOLOJİK CİNSİYET</label>
                     <select
                       value={meta.gender}
                       onChange={(e) => setMeta((m) => ({ ...m, gender: e.target.value as Gender }))}
                       className="w-full rounded-lg px-3 py-2.5 text-sm text-slate-200 outline-none"
                       style={{ backgroundColor: '#0b0f19', border: '1px solid rgba(55,65,81,0.9)', color: meta.gender ? '#f1f5f9' : '#4b5563' }}
                     >
-                      <option value="" disabled style={{ color: '#4b5563' }}>Select…</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other / Not specified</option>
+                      <option value="" disabled style={{ color: '#4b5563' }}>Seçiniz…</option>
+                      <option value="male">Erkek</option>
+                      <option value="female">Kadın</option>
+                      <option value="other">Diğer / Belirtilmemiş</option>
                     </select>
                   </div>
                 </div>
@@ -340,14 +340,14 @@ export default function App() {
                       <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
                         <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="3" strokeDasharray="31.4" strokeDashoffset="10" />
                       </svg>
-                      Analyzing EKG…
+                      EKG Analiz Ediliyor…
                     </>
                   ) : (
                     <>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                         <path d="M22 12H18L15 21L9 3L6 12H2" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                      Analyze EKG
+                      EKG'yi Analiz Et
                     </>
                   )}
                 </button>
@@ -361,17 +361,17 @@ export default function App() {
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px" style={{ backgroundColor: 'rgba(55,65,81,0.6)' }} />
               <span className="text-xs font-semibold tracking-widest uppercase text-[#6b7280]" style={{ fontFamily: 'DM Mono, monospace' }}>
-                Analysis Report
+                Analiz Raporu
               </span>
               <div className="flex-1 h-px" style={{ backgroundColor: 'rgba(55,65,81,0.6)' }} />
             </div>
 
             <div className="rounded-xl px-5 py-3 flex items-center gap-6 flex-wrap text-xs animate-fade-in-up" style={{ backgroundColor: '#111827', border: '1px solid rgba(55,65,81,0.7)' }}>
               {[
-                { label: 'AGE', value: `${meta.age} yrs` },
-                { label: 'SEX', value: meta.gender.charAt(0).toUpperCase() + meta.gender.slice(1) },
-                { label: 'FILE', value: file?.name ?? '—' },
-                { label: 'STATUS', value: result.isPathological ? 'PATHOLOGICAL' : 'NORMAL', color: result.isPathological ? '#ef4444' : '#34d399' },
+                { label: 'YAŞ', value: `${meta.age} y§` },
+                { label: 'CİNSİYET', value: meta.gender === 'male' ? 'Erkek' : meta.gender === 'female' ? 'Kadın' : 'Diğer' },
+                { label: 'DOSYA', value: file?.name ?? '—' },
+                { label: 'DURUM', value: result.isPathological ? 'PATOLOJİK' : 'NORMAL', color: result.isPathological ? '#ef4444' : '#34d399' },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-2">
                   <span className="text-[#4b5563]" style={{ fontFamily: 'DM Mono, monospace' }}>{item.label}</span>
@@ -399,7 +399,7 @@ export default function App() {
                   </div>
                   <div>
                     <p className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: result.isPathological ? '#ef4444' : '#34d399', fontFamily: 'DM Mono, monospace' }}>
-                      Primary Diagnosis
+                      Birincil Tanı
                     </p>
                     <h2 className="text-lg font-semibold leading-snug" style={{ color: result.isPathological ? '#fca5a5' : '#6ee7b7' }}>
                       {result.primary}
@@ -408,7 +408,7 @@ export default function App() {
                 </div>
 
                 <div className="text-right flex-shrink-0">
-                  <p className="text-xs text-[#6b7280] mb-1" style={{ fontFamily: 'DM Mono, monospace' }}>MODEL CONFIDENCE</p>
+                  <p className="text-xs text-[#6b7280] mb-1" style={{ fontFamily: 'DM Mono, monospace' }}>MODEL GÜVEN ORANI</p>
                   <p className="text-3xl font-bold tabular-nums" style={{ color: result.isPathological ? '#ef4444' : '#34d399', fontFamily: 'DM Mono, monospace' }}>
                     {result.confidence}%
                   </p>
@@ -417,7 +417,7 @@ export default function App() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              <SectionCard title="Differential Diagnoses" accent="#f59e0b" delay={100}>
+              <SectionCard title="Ayıirici Tanılar (Alternatifler)" accent="#f59e0b" delay={100}>
                 <div className="space-y-3">
                   {result.differentials.map((d) => (
                     <div key={d.label}>
@@ -431,7 +431,7 @@ export default function App() {
                 </div>
               </SectionCard>
 
-              <SectionCard title="Findings & Clinical Evaluation" accent="#818cf8" delay={150}>
+              <SectionCard title="Bulgular ve Klinik Değerlendirme" accent="#818cf8" delay={150}>
                 <ul className="space-y-2">
                   {result.findings.map((f, i) => (
                     <li key={i} className="flex items-start gap-2.5">
@@ -444,7 +444,7 @@ export default function App() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              <SectionCard title="Possible Outcomes & Risks" accent="#ef4444" delay={200}>
+              <SectionCard title="Olası Sonuçlar ve Riskler" accent="#ef4444" delay={200}>
                 <ul className="space-y-2">
                   {result.risks.map((r, i) => (
                     <li key={i} className="flex items-start gap-2.5">
@@ -455,7 +455,7 @@ export default function App() {
                 </ul>
               </SectionCard>
 
-              <SectionCard title="Treatment & Management Approach" accent="#34d399" delay={250}>
+              <SectionCard title="Tedavi ve Yönetim Yaklaşımı" accent="#34d399" delay={250}>
                 <ol className="space-y-2">
                   {result.treatment.map((t, i) => (
                     <li key={i} className="flex items-start gap-3">
@@ -480,7 +480,7 @@ export default function App() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#22d3ee', fontFamily: 'DM Mono, monospace' }}>
-                    Student Note · Artifact Warning
+                    Öğrenci Notu · Artefakt Uyarısı
                   </p>
                   <p className="text-sm leading-relaxed italic" style={{ color: '#a5f3fc' }}>
                     {result.studentNote}
@@ -490,8 +490,8 @@ export default function App() {
             </div>
 
             <p className="text-center text-xs text-[#374151] leading-relaxed px-4" style={{ fontFamily: 'DM Mono, monospace' }}>
-              ⚠ This output is generated for educational purposes only and must not be used to guide clinical decisions.
-              Always consult a board-certified cardiologist and correlate with full clinical context.
+              ⚠ Bu çıktı yalnızca eğitim amaçlı üretilmiştir ve klinik kararları yönlendirmek için kesinlikle kullanılmamıştır.
+              Her zaman sertifikalı bir kardiyoloğa danışın.
             </p>
           </section>
         )}
@@ -504,8 +504,8 @@ export default function App() {
               </svg>
             </div>
             <p className="text-sm text-[#4b5563]">
-              Upload an EKG, fill in patient metadata, and click{' '}
-              <span className="text-[#ef4444]">Analyze EKG</span> to generate the report.
+              Bir EKG yükleyin, hasta bilgilerini girin ve raporu oluşturmak için{' '}
+              <span className="text-[#ef4444]">EKG'yi Analiz Et</span> butonuna tıklayın.
             </p>
           </div>
         )}

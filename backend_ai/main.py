@@ -354,12 +354,19 @@ async def gorsel_analiz(dosya: UploadFile = File(...), yas: str = Form(None), ci
             else:
                 gorsel = Image.open(io.BytesIO(icerik)).convert("RGB")
             
-            # 2. ADIM: Otomatik Boyutlandırma (224x224)
-            gorsel = gorsel.resize((224, 224)) 
-            gorsel_array = np.array(gorsel).flatten().reshape(1, -1)
+            # 2. ADIM: Resmi Numpy dizisine çevir ve 3 özellik (Feature) çıkar
+            gorsel_np = np.array(gorsel)
+            
+            # Model 3 özellik beklediği için şimdilik resmin R, G, B renk ortalamalarını alıyoruz
+            r_ortalama = np.mean(gorsel_np[:, :, 0])
+            g_ortalama = np.mean(gorsel_np[:, :, 1])
+            b_ortalama = np.mean(gorsel_np[:, :, 2])
+            
+            # Analiz verisini tam olarak [1, 3] boyutunda hazırlıyoruz
+            analiz_verisi = np.array([[r_ortalama, g_ortalama, b_ortalama]])
             
             # 3. ADIM: Gerçek Yapay Zeka Tahmini
-            tahmin_edilen_sinif = ai_model.predict(gorsel_array)[0]
+            tahmin_edilen_sinif = ai_model.predict(analiz_verisi)[0]
             tani_key = str(tahmin_edilen_sinif).upper()
             print(f"Yapay Zeka Tahmini Başarılı: {tani_key}")
             

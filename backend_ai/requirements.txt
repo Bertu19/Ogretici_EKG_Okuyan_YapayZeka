@@ -6,3 +6,5 @@ scikit-learn
 numpy
 Pillow
 PyMuPDF
+opencv-python-headless
+scipy

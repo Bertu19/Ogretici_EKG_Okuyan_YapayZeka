@@ -1,7 +1,8 @@
 ﻿fastapi
 uvicorn
-pandas
-numpy
-scikit-learn
-joblib
 python-multipart
+joblib
+scikit-learn
+numpy
+Pillow
+PyMuPDF

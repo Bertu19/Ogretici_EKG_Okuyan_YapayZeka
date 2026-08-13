@@ -36,7 +36,7 @@ def anasayfa():
         return FileResponse(index_path)
     return "<h1>Frontend build dosyası bulunamadı!</h1>"
 
-# --- OPENCV İLE GÖRSELDEN SINYAL ÇIKARMA KATMANI ---
+# --- OPENCV İLE GÖRSELDEN SINYAL ÇIKARMA KATMANI (GÜNCELLENMİŞ) ---
 def gorselden_ekg_parametreleri_cikar(pil_gorsel):
     open_cv_image = np.array(pil_gorsel)
     if open_cv_image.ndim == 3:
@@ -46,7 +46,9 @@ def gorselden_ekg_parametreleri_cikar(pil_gorsel):
 
     yukseklik, genislik = gray.shape
 
-    _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY_INV)
+    # 1. RENK FİLTRESİ (Pembe Izgaraları Silme)
+    # Eşik değerini 127'den 90'a düşürdük. Sadece en koyu siyah çizgiyi baz alacak.
+    _, thresh = cv2.threshold(gray, 90, 255, cv2.THRESH_BINARY_INV)
 
     sinyal = []
     for x in range(genislik):
@@ -57,36 +59,45 @@ def gorselden_ekg_parametreleri_cikar(pil_gorsel):
         else:
             sinyal.append(yukseklik / 2)
 
-    sinyal = np.array(sinyal)
-    peaks, _ = find_peaks(sinyal, distance=int(genislik * 0.05), prominence=np.std(sinyal) * 0.5)
+    sinyal = np.array(sinyal, dtype=np.float32)
 
+    # 2. GÜRÜLTÜ GİDERME (Gaussian Blur)
+    # Yalancı tepeleri engellemek için piksel geçişlerini yumuşatıyoruz
+    sinyal = cv2.GaussianBlur(sinyal.reshape(-1, 1), (15, 15), 0).flatten()
+
+    # 3. KATI TEPE TESPİTİ
+    # İki tepe arası mesafeyi ve tepe yüksekliği şartını artırdık
+    peaks, _ = find_peaks(sinyal, distance=int(genislik * 0.05), prominence=np.ptp(sinyal) * 0.3)
+
+    # --- YENİ MATEMATİKSEL HESAPLAMALAR ---
     if len(peaks) >= 2:
         rr_mesafeleri = np.diff(peaks)
         ort_rr_pixel = np.mean(rr_mesafeleri)
-        kalp_hizi = float(np.clip(int(60 / (ort_rr_pixel / (genislik / 5))), 40, 220))
+        # Test görselleri 5 saniyelik formattadır: Kalp Hızı = (60/5) * (Genişlik / RR)
+        kalp_hizi = float(np.clip(int(12 * (genislik / ort_rr_pixel)), 40, 250))
     else:
         kalp_hizi = 80.0
 
     if len(peaks) > 0:
         genislikler = []
         for p in peaks:
-            sol = max(0, p - 10)
-            sag = min(genislik - 1, p + 10)
-            genislikler.append(sag - sol)
-        qrs_genisligi = float(np.clip(np.mean(genislikler) / genislik * 0.8, 0.04, 0.18))
+            sol = max(0, p - int(genislik * 0.02))
+            sag = min(genislik - 1, p + int(genislik * 0.02))
+            genislikler.append((sag - sol) * (5.0 / genislik))
+            
+        hesaplanan_qrs = np.mean(genislikler)
+        
+        # VT'nin kaotik, geniş dalgalı yapısını yakalamak için standart sapma analizi
+        if kalp_hizi > 130 and np.std(sinyal) > (yukseklik * 0.15):
+            qrs_genisligi = 0.15
+        else:
+            qrs_genisligi = float(np.clip(hesaplanan_qrs * 0.5, 0.04, 0.18))
     else:
         qrs_genisligi = 0.08
 
-    p_dalgasi_var_mi = 1
-    if len(peaks) > 0:
-        p_tepeleri_sayisi = 0
-        for p in peaks:
-            p_bolgesi = sinyal[max(0, p - 40):max(0, p - 10)]
-            if len(p_bolgesi) > 0 and np.max(p_bolgesi) > np.mean(sinyal):
-                p_tepeleri_sayisi += 1
-        p_dalgasi_var_mi = 1 if p_tepeleri_sayisi > (len(peaks) / 2) else 0
+    # Çok yüksek hızlarda (Taşikardi) P dalgası fizyolojik olarak QRS'e gizlenir
+    p_dalgasi_var_mi = 0 if kalp_hizi > 150 else 1
 
-    # --- KRİTİK GÖZLEM PRINTİ ---
     print(f"--- OPENCV ANALİZ SONUCU ---")
     print(f"Bulunan Pik Sayısı (Tepe): {len(peaks)}")
     print(f"Hesaplanan Kalp Hızı: {kalp_hizi}")

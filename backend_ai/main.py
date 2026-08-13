@@ -11,10 +11,13 @@ import io
 app = FastAPI(title="EKG Analiz Asistani")
 
 # --- YAPAY ZEKA MODELİNİN YÜKLENMESİ ---
-MODEL_YOLU = "modeller/ekg_rf_modeli.pkl"
+# Mevcut dosyanın (main.py) bulunduğu klasörün tam yolunu dinamik olarak alıyoruz
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_YOLU = os.path.join(BASE_DIR, "modeller", "ekg_rf_modeli.pkl")
+
 try:
     ai_model = joblib.load(MODEL_YOLU)
-    print("Yapay Zeka Modeli Başarıyla Yüklendi.")
+    print(f"Yapay Zeka Modeli Başarıyla Yüklendi. Yol: {MODEL_YOLU}")
 except Exception as e:
     ai_model = None
     print(f"Model yüklenemedi: {e}")
